@@ -1,0 +1,8 @@
+https://netflix-clone-f490a.web.app/
+
+api key bb895df3991fae5173bbe43d4afe5e76
+
+api.themoviedb.org/3/movie/550?api_key=bb895df3991fae5173bbe43d4afe5e76
+
+$ npm install react-youtube
+npm install movie-trailer
