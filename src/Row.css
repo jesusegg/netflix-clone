@@ -29,3 +29,16 @@
   transform: scale(1.09);
   opacity: 1;
 }
+
+@media (max-width: 500px) {
+  .row_posterLarge.row_poster {
+    max-height: 190px;
+  }
+  .row_poster {
+    max-height: 80px;
+  }
+  .youtube {
+    height: 180px;
+    width: 100%;
+  }
+}

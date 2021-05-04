@@ -50,10 +50,10 @@ function Banner() {
         {/* description */}
         <h1 className="banner_description">
           {movie?.overview}
-          {truncate(movie?.overview, 150)}
+          {truncate(movie?.overview, 140)}
         </h1>
       </div>
-      <div className="panner-fadeBottom"></div>
+      <div className="banner-fadeBottom"></div>
     </header>
   );
 }

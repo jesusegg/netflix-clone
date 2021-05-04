@@ -4,5 +4,7 @@ api key bb895df3991fae5173bbe43d4afe5e76
 
 api.themoviedb.org/3/movie/550?api_key=bb895df3991fae5173bbe43d4afe5e76
 
+axios
+firebase install
 $ npm install react-youtube
 npm install movie-trailer

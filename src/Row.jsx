@@ -32,13 +32,13 @@ function Row({ title, fetchURL, isLargeRow }) {
       autoplay: 1,
     },
   };
-
+  console.log(movies);
   const handleClick = (movie) => {
     console.log(trailerUrl);
     if (trailerUrl) {
       setTrailerUrl("");
     } else {
-      console.log(movie.name);
+      //console.log(movie);
       movieTrailer(movie?.title || movie?.name || movie?.original_name || "")
         .then((url) => {
           const urlParams = new URLSearchParams(new URL(url).search); //una busca el substring del url y el otro crea una funcion con el parametro get para buscar todo lo del url despues de la v
@@ -50,12 +50,13 @@ function Row({ title, fetchURL, isLargeRow }) {
 
   return (
     <div className="row">
-      {" "}
       {/* container -> posters */}
+
       {/*titulo de la fila*/}
       <h2>{title}</h2>
+
+      {/*several row_posters*/}
       <div className="row_posters">
-        {/*several row_posters*/}
         {movies
           ? movies.map((movie) => (
               <img
@@ -70,7 +71,11 @@ function Row({ title, fetchURL, isLargeRow }) {
             ))
           : console.log("error")}
       </div>
-      {trailerUrl && <Youtube videoId={trailerUrl} opts={opts} />}
+      {/* {codigo para mostrar trailer de youtube} */}
+      {trailerUrl && (
+        <Youtube className="youtube" videoId={trailerUrl} opts={opts} />
+      )}
+      {/* false && variable = false  true && variable = variable */}
     </div>
   );
 }
