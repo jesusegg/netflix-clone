@@ -35,7 +35,7 @@ function Row({ title, fetchURL, isLargeRow, ref }) {
   };
   // console.log(movies);
   const handleClick = (movie) => {
-    console.log(trailerUrl);
+    // console.log(trailerUrl);
     if (trailerUrl) {
       setTrailerUrl("");
     } else {
@@ -92,7 +92,7 @@ export function RowLazy({ title, fetchURL, isLargeRow, id }) {
   useEffect(() => {
     const onChange = (entries) => {
       const el = entries;
-      console.log(entries, "entries");
+      // console.log(entries, "entries");
       entries.forEach((ele) => {
         if (ele.isIntersecting) {
           setShow(id);
@@ -105,8 +105,8 @@ export function RowLazy({ title, fetchURL, isLargeRow, id }) {
 
     observer.observe(document.querySelector(`#${id}`));
   }, [id]);
-  console.log(show);
-  console.log(document.querySelector(`#${id}`));
+  // console.log(show);
+  // console.log(document.querySelector(`#${id}`));
   return (
     <div id={`${id}`}>
       {show === id && (
