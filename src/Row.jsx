@@ -6,7 +6,7 @@ import movieTrailer from "movie-trailer";
 
 const base_url = "https://image.tmdb.org/t/p/original/";
 
-function Row({ title, fetchURL, isLargeRow }) {
+function Row({ title, fetchURL, isLargeRow, ref }) {
   const [movies, setMovies] = useState([]);
   const [trailerUrl, setTrailerUrl] = useState("");
 
@@ -17,7 +17,7 @@ function Row({ title, fetchURL, isLargeRow }) {
       const request = await axios.get(fetchURL);
       // "https://api.themoviedb.org/3/trending/all/week?api_key=${API_Key}$language=en-US"
       //console.log(request.data.results)
-      console.log(request);
+
       setMovies(request.data.results);
       return request;
     }
@@ -33,7 +33,7 @@ function Row({ title, fetchURL, isLargeRow }) {
       autoplay: 1,
     },
   };
-  console.log(movies);
+  // console.log(movies);
   const handleClick = (movie) => {
     console.log(trailerUrl);
     if (trailerUrl) {
@@ -50,33 +50,68 @@ function Row({ title, fetchURL, isLargeRow }) {
   };
 
   return (
-    <div className="row">
-      {/* container -> posters */}
+    <>
+      {/* <div id="row"> */}
 
-      {/*titulo de la fila*/}
-      <h2>{title}</h2>
+      <div className="row" ref={ref}>
+        {/* container -> posters */}
 
-      {/*several row_posters*/}
-      <div className="row_posters">
-        {movies
-          ? movies.map((movie) => (
-              <img
-                key={movie.id}
-                onClick={() => handleClick(movie)}
-                className={`row_poster ${isLargeRow && "row_posterLarge"}`} // (expr1 && expr2) Devuelve expr1 si se puede convertir a false; de lo contrario, devuelve expr2. Por lo tanto, cuando se usa con valores booleanos, && devuelve true si ambos operandos son true; de lo contrario, devuelve false.
-                src={`${base_url}${
-                  isLargeRow ? movie.poster_path : movie.backdrop_path
-                }`}
-                alt={movie.name}
-              />
-            ))
-          : console.log("error")}
+        {/*titulo de la fila*/}
+        <h2>{title}</h2>
+
+        {/*several row_posters*/}
+        <div className="row_posters">
+          {movies
+            ? movies.map((movie) => (
+                <img
+                  key={movie.id}
+                  onClick={() => handleClick(movie)}
+                  className={`row_poster ${isLargeRow && "row_posterLarge"}`} // (expr1 && expr2) Devuelve expr1 si se puede convertir a false; de lo contrario, devuelve expr2. Por lo tanto, cuando se usa con valores booleanos, && devuelve true si ambos operandos son true; de lo contrario, devuelve false.
+                  src={`${base_url}${
+                    isLargeRow ? movie.poster_path : movie.backdrop_path
+                  }`}
+                  alt={movie.name}
+                />
+              ))
+            : console.log("error")}
+        </div>
+        {/* {codigo para mostrar trailer de youtube} */}
+        {trailerUrl && (
+          <Youtube className="youtube" videoId={trailerUrl} opts={opts} />
+        )}
+        {/* false && variable = false  true && variable = variable */}
       </div>
-      {/* {codigo para mostrar trailer de youtube} */}
-      {trailerUrl && (
-        <Youtube className="youtube" videoId={trailerUrl} opts={opts} />
+
+      {/* </div> */}
+    </>
+  );
+}
+
+export function RowLazy({ title, fetchURL, isLargeRow, id }) {
+  const [show, setShow] = useState("");
+  useEffect(() => {
+    const onChange = (entries) => {
+      const el = entries;
+      console.log(entries, "entries");
+      entries.forEach((ele) => {
+        if (ele.isIntersecting) {
+          setShow(id);
+        }
+      });
+    };
+    const observer = new IntersectionObserver(onChange, {
+      rootMargin: "10px",
+    });
+
+    observer.observe(document.querySelector(`#${id}`));
+  }, [id]);
+  console.log(show);
+  console.log(document.querySelector(`#${id}`));
+  return (
+    <div id={`${id}`}>
+      {show === id && (
+        <Row title={title} fetchURL={fetchURL} isLargeRow={isLargeRow} />
       )}
-      {/* false && variable = false  true && variable = variable */}
     </div>
   );
 }
